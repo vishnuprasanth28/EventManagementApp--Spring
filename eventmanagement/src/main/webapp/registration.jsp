@@ -79,12 +79,41 @@
       width: 90%;
     }
   }
+  
+  .alert {
+            font-weight: bold; /* Make the text bold */
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+  
+   .alert-success {
+            background-color: #d4edda; 
+            border-color: #c3e6cb; 
+            color: #155724;
+        }
+        
+        .alert-danger {
+            background-color: #f8d7da; 
+            border-color: #f5c6cb; 
+            color: #721c24; 
+        }
+  
 </style>
 </head>
 <body>
 
 <div class="container">
   <h2>Registration Form</h2>
+  
+  
+  <% if (request.getAttribute("success") != null) { %>
+        <div class="alert alert-success"><%= request.getAttribute("success") %></div>
+    <% } %>
+    
+    <% if (request.getAttribute("error") != null) { %>
+        <div class="alert alert-danger"><%= request.getAttribute("error") %></div>
+    <% } %>
  
     <form id="registrationForm" action="registerUser" method="post">
     <div class="form-group">
@@ -94,7 +123,7 @@
     </div>
     <div class="form-group">
       <label for="mobile">Mobile No:</label>
-      <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" required>
+      <input type="text" id="mobile" name="mobile" pattern="[0-9]{10}" required>
       <span id="mobileError" class="error"></span>
     </div>
     <div class="form-group">
@@ -114,8 +143,11 @@
     </div>
     <input type="hidden" name="action" value="register">
     <button type="submit" id="submitBtn">Register</button>
+    
   </form>
-
+<div class="error" style="display: ${not empty errorMessage ? 'block' : 'none'};">
+            ${errorMessage}
+        </div>
   <br><br>
 
    

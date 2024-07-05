@@ -35,26 +35,7 @@ public class UserController {
 		return "index.jsp";
 	}
 	
-	 @PostMapping("/adminLogin")
-	    public String adminLogin(@RequestParam("Username") String userName,@RequestParam("Password") String password, HttpSession session, Model model) {
-	      
-	        User user = new User();
-	        user.setUserName(userName);
-	        user.setPassword(password);
-
-	        try {
-	            if (userDao.adminLogin(user)) {
-	                session.setAttribute("admin", user.getUserName());
-	             //   model.addAttribute("venueList", dbOperation.getAllVenues());
-	              //  model.addAttribute("listOfVendors", dbOperation.getVendor());
-	              //  model.addAttribute("bookedEvents", dbOperation.getEvents());
-	                return "admin.jsp"; 
-	            }
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	        return "error"; 
-	    }
+	
 
 	    @PostMapping("/registerUser")
 	    public String registerUser(@RequestParam("username") String UserName,@RequestParam("mobile") String contact,@RequestParam("email") String email,@RequestParam("confirmPassword") String confirmPassword,Model model) {
@@ -108,6 +89,7 @@ public class UserController {
 	        
 	        try {
 	            if (userDao.userLogin(user)) {
+	            	
 	               user.setUserId(userDao.getUserId(user));
 	                session.setAttribute("user", user);
 	                return "index.jsp";
@@ -119,6 +101,16 @@ public class UserController {
 	        }
 	        return "error"; 
 	    }
+	    
+	    @PostMapping("/logout")
+	     public String userLogout(HttpSession session, HttpServletRequest request) {
+	         session = request.getSession(false);
+	         if(session != null) {
+	             session.invalidate();
+	         }
+	         
+	         return "redirect:/index.jsp";
+	     }
 	}
 	
 

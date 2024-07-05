@@ -100,7 +100,7 @@ boolean isLoggedIn = (user != null);
         <a class="nav-link" href="index.jsp">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="service.jsp">Services</a>
+        <a class="nav-link" href="services.jsp">Services</a>
       </li>
        <% if (!isLoggedIn) { %>
                 <!-- Show Sign Up and Sign In only if the user is not logged in -->
@@ -113,7 +113,7 @@ boolean isLoggedIn = (user != null);
                     Sign In
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="signIn.jsp">Admin</a>
+                        <a class="dropdown-item" href="admin.jsp">Admin</a>
                         <a class="dropdown-item" href="user.jsp">User</a>
                     </div>
                 </li>
@@ -124,7 +124,7 @@ boolean isLoggedIn = (user != null);
                     
                 </li>
                 <li class="nav-item">
-                      <form action="LogOutServlet" method="post">
+                      <form action="logout" method="post">
                         <button type="submit" class="btn btn-primary">Logout</button>
                     </form>
                 </li>

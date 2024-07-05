@@ -48,13 +48,9 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	  public int getUserId(User user) {
 		  String getId="select user_id from Users where username=?";
-		  List<User> users = jdbcTemplate.query(getId,new UserMapper(), new Object[]{user.getUserName()});
-	        if (!users.isEmpty()) {
-	        	System.out.println(users.get(0).getUserId());
-	            return users.get(0).getUserId();
-	        }
-	        return 0;
-	    } 
+		  Integer userId = jdbcTemplate.queryForObject(getId,Integer.class, new Object[]{user.getUserName()});
+		  return userId != null? userId :0; 
+	}
 		  
 	  }
 

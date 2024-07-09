@@ -86,7 +86,7 @@ html {
   <form action="userLogin" method="post">
     <div class="user-box">
       <input type="text"  name="Username" placeholder="Username"  pattern="[A-Za-z]+"  required>
-      <label for="Username">userName</label>
+      <label for="Username">UserName</label>
     </div>
     <div class="user-box">
       <input type="password" name="Password" placeholder="Password"  required>

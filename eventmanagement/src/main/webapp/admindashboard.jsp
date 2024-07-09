@@ -99,6 +99,10 @@ if (cookies != null) {
             <li class="nav-item"><a class="nav-link" id="watchlists-tab"
                 data-toggle="tab" href="#watchlists" role="tab"
                 aria-controls="watchlists" aria-selected="false">Add Vendors</a></li>
+                <li class="nav-item">
+   						 <a class="nav-link" id="addshows-tab" data-toggle="tab" href="#addshows" role="tab" aria-controls="addshows" aria-selected="false">Add Shows</a>
+					</li>
+               
             <li class="nav-item"><a class="nav-link" id="orders-tab"
                 data-toggle="tab" href="#orders" role="tab" aria-controls="orders"
                 aria-selected="false">Orders</a></li>
@@ -285,6 +289,61 @@ if (cookies != null) {
                     </table>
                 <% } %>
             </div>
+            <div class="tab-pane fade" id="addshows" role="tabpanel" aria-labelledby="addshows-tab">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Add Show</h5>
+
+              <form action="addshow" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="showName">Show Name:</label>
+                <input type="text" id="name" name="showName" class="form-control">
+            </div>
+            <div class="form-group">
+        <label for="category">Category Type:</label>
+        <select id="category" name="category" class="form-control">
+            <option value="MusicConcerts">Music</option>
+            <option value="DanceShows">Dance </option>
+            <option value="ComedyShows">Comedy</option>
+        </select>
+    </div>
+            <div class="form-group">
+                <label for="Address">Location:</label>
+                <input type="text" id="address" name="location" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="startTime">Start Time</label>
+                <input type="time" id="startTime" name="startTime" class="form-control">
+            </div>
+             <div class="form-group">
+                <label for="endTime">End Time</label>
+                <input type="time" id="endTime" name="endTime" class="form-control">
+            </div>
+             <div class="form-group">
+                <label for="tickets_count">Tickets count :</label>
+                <input type="number" id="tickets_count" name="tickets_count" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="Price">Price :</label>
+                <input type="number" id="price" name="price" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="poster_image">Poster Image:</label>
+                <input type="file" id="poster_image" name="poster_image" class="form-control-file" accept="image/*" required>
+            </div>
+            <input type="hidden" name="action" value="addshow">
+            <button type="submit" class="btn btn-submit">Submit</button>
+        </form>
+     
+        </div>
+    </div>
+</div>
+            
+            
             <div class="tab-pane fade" id="orders" role="tabpanel"
                 aria-labelledby="orders-tab">
                 <% ArrayList<Event> bookingList = (ArrayList<Event>) request.getAttribute("bookedEvents");
@@ -332,6 +391,7 @@ if (cookies != null) {
             </div>
         </div>
     </div>
+               
 
     <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

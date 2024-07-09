@@ -456,9 +456,47 @@ font-size: 1.6rem;
             </div>
             
         </div>
+        
+         <h2>Entertainment Events</h2>
+        <div class="menu-container">
+            <div class="menu-item">
+         <form action="/book" method="post">
+        <input type="hidden" name="eventType" value="MusicConcerts">
+        <button>
+                <img src="images/conference.jpeg" alt="Menu 1">
+                <div class="item-caption" >Music Concerts</div>
+                </button>
+                </form>
+            </div>
+            <div class="menu-item">
+  			<a href="#" onclick="getEvents('DanceShows')">
+                <img src="images/product.webp" alt="Menu 2">
+                <div class="item-caption">Dance Shows</div>
+            </div>
+            <div class="menu-item">
+              <a href="#" onclick="getEvents('ComedyShows')">
+                <img src="images/trade.jpeg" alt="Menu 3">
+                <div class="item-caption">Comedy Shows</div>
+            </div>
+        </div>
+        
     </div>
-     </section>
-     
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+    function getEvents(eventType) {
+        $.ajax({
+            url: '/events/' + eventType,
+            type: 'GET',
+            success: function(response) {
+                console.log('Event type: ' + eventType + ' retrieved successfully');
+                // Handle response data as needed
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching ' + eventType + ' events: ' + error);
+            }
+        });
+    }
+</script> 
 
      
      

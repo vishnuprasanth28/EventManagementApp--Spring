@@ -1,6 +1,10 @@
 package com.chainsys.eventmanagement.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.chainsys.eventmanagement.dao.BookingsDAOImpl;
 import com.chainsys.eventmanagement.dao.ServiceDAO;
 import com.chainsys.eventmanagement.dao.UserDAO;
+import com.chainsys.eventmanagement.model.Show;
 import com.chainsys.eventmanagement.model.User;
 import com.chainsys.eventmanagement.model.Vendor;
 import com.chainsys.eventmanagement.model.Venue;
@@ -24,6 +30,9 @@ public class AdminController {
 	UserDAO userDao;
 	@Autowired
 	ServiceDAO serviceDao;
+	
+	@Autowired
+	BookingsDAOImpl bookingsDaoImpl;
 	
 	private static final String ADMIN_JSP = "admindashboard.jsp";
 	private static final String VENUE_LIST_ATTRIBUTE = "venueList";
@@ -139,4 +148,48 @@ public class AdminController {
 		 
 		 
 	 }
+	 @PostMapping("/addshow")
+	    public String addShow(@RequestParam("showName") String ShowName,
+	                           @RequestParam("category") String category,
+	                           @RequestParam("location") String location,
+	                           @RequestParam("date") Date date,
+	                           @RequestParam("startTime") String startTimeStr,
+	                           @RequestParam("endTime") String endTimeStr,
+	                           @RequestParam("tickets_count") int ticketsCount,
+	                           @RequestParam("price") int price,
+	                           @RequestParam("poster_image") MultipartFile posterImage,
+	                           Model model) throws IOException {
+	       
+		 DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+		  LocalTime startTime = LocalTime.parse(startTimeStr, timeFormatter);
+	        LocalTime endTime = LocalTime.parse(endTimeStr, timeFormatter);
+		 
+	        byte[] posterImages = posterImage.getBytes();
+	        Time sqlStartTime = Time.valueOf(startTime);
+	        Time sqlEndTime = Time.valueOf(endTime);
+	      
+	        Show show = new Show();
+	        show.setName(ShowName);
+	        show.setCategory(category);
+	        show.setLocation(location);
+	        show.setDate(date);
+	        show.setStartTime(sqlStartTime);
+	        show.setEndTime(sqlEndTime);
+	        show.setTicketsCount(ticketsCount);
+	        show.setPrice(price);
+	        show.setPosterImage(posterImages);
+	        
+	        try {
+	        	bookingsDaoImpl.insertShow(show);
+	            List<Venue> venueList = serviceDao.getAllVenues();
+	            model.addAttribute(VENUE_LIST_ATTRIBUTE, venueList);
+	            model.addAttribute("listOfVendors", serviceDao.getAllvendors());
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            model.addAttribute("error", "Failed to add venue. Please try again.");
+	        }
+	 
+	        return ADMIN_JSP;
+}
+	 
 }

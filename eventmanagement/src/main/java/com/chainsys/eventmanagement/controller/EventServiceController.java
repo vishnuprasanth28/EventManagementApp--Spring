@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chainsys.eventmanagement.dao.ServiceDAOImpl;
 import com.chainsys.eventmanagement.model.Event;
+import com.chainsys.eventmanagement.model.User;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class EventServiceController {
@@ -86,4 +88,24 @@ public class EventServiceController {
 		
 		return "checkout.jsp";
 	}
+	@PostMapping("/payment")
+	public String makePayment(@RequestParam("event") String eventType,@RequestParam("venueId") int venueId,@RequestParam("date") String eventDateStr,
+								@RequestParam("photographyVendorId") int photographyId,
+								@RequestParam("cateringVendorId") int cateringId,@RequestParam("estimatedPrice") String totalPrice,HttpSession session) {
+		
+	
+		User user =	(User) session.getAttribute("user");
+		
+		Event events = new Event();
+		events.setDateString(eventDateStr);
+		events.setUserId(user.getUserId());
+		events.setVenueId(venueId);
+		events.setCateringId(cateringId);
+		events.setEventName(eventType);
+		events.setPhotoGraphyId(photographyId);
+
+		serviceImpl.storeBookedEvents(events);
+		return "payment.jsp";
+	}
+	
 }

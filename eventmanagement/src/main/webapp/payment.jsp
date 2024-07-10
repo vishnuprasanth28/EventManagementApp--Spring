@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="com.chainsys.eventmanagement.model.Show" %>
 <!DOCTYPE html>
 <html lang=en>
 <head>
@@ -16,6 +17,14 @@
     </style>
 </head>
 <body>
+	<% Show show = (Show)request.getAttribute("data") ;
+		int price=0;
+		if (show!=null){
+			price=show.getPrice();
+		}else{
+			price=500;
+		}
+	%>
     <div class="container">
         <h1>Payment Page</h1>
         <div class="row">
@@ -57,7 +66,7 @@
                     </div>
                         <div class="form-group">
     <label for="advance">Price</label>
-    <input type="text" class="form-control" id="advance" name="advance" value="<%= request.getAttribute("price") %>" required>
+    <input type="text" class="form-control" id="advance" name="advance" value="<%= price %>" required>
 </div>
                     <button type="button" class="btn btn-success" onclick="processPayment()">Pay Now</button>
                 </form>
@@ -68,8 +77,15 @@
             <div class="col-md-6">
                 <div class="alert alert-success" role="alert">
                     Payment Successful!
-                    
-                    <a href="index.jsp">Back to home...</a>
+                    <% if(show!=null){ %>
+                    <form action="tickets" method="post">
+                    <input type="hidden" name="showId" value="<%= show.getId()%>">
+                    <input type="hidden" name="tickets" value="<%= show.getTicketsBooked()%>">
+                    <button>Get Tickets</button>
+                     </form>
+                     <% }else { %>
+                     <a href="index.jsp">Back to Home page...</a>
+                    <%} %>
                 </div>
             </div>
         </div>

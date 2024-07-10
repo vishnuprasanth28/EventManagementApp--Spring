@@ -121,12 +121,13 @@ boolean isLoggedIn = (user != null);
 			<button onclick="window.print()"> Download Estimation </button>
 			<br>
 			<br>
-			<form action="PaymentServlet" method="post">
+			<form action="payment" method="post">
 			<input type="hidden" name="date" value="<%= event.getDateString()%>">
 				<input type="hidden" name="event" value="<%= event.getEventType()%>">
 				<input type="hidden" name="venueId" value="<%= event.getVenueId() %>">
 				<input type="hidden" name="photographyVendorId" value="<%= event.getPhotoGraphyId() %>">
 				<input type="hidden" name="cateringVendorId" value="<%= event.getCateringId() %>">
+				<input type="hidden" name="estimatedPrice" value="<%=event.getEstimatedPrice() %>">
 				<button type="submit" class="btn btn-primary">Pay Now</button>
 			</form>
 		</div>

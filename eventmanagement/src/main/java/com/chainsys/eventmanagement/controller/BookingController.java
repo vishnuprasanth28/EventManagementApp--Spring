@@ -37,8 +37,14 @@ public class BookingController {
 			show.setPrice(totalPriceInt);
 			bookingsDao.updateTicketsCount(showId, tickets);
 			bookingsDao.storeBookingsDetails(show);
-			model.addAttribute("price", total);
+			model.addAttribute("data", show);
 		return "payment.jsp";
 		
+	}
+	public String getBookedTickets(Model model,@RequestParam("showId") int showId,@RequestParam("tickets") int tickets) {
+		
+		
+		
+		return "tickets.jsp";
 	}
 }

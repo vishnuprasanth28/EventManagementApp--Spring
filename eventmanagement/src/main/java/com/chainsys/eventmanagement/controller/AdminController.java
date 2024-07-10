@@ -21,6 +21,7 @@ import com.chainsys.eventmanagement.model.Show;
 import com.chainsys.eventmanagement.model.User;
 import com.chainsys.eventmanagement.model.Vendor;
 import com.chainsys.eventmanagement.model.Venue;
+import com.chainsys.eventmanagement.validation.Validator;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -30,7 +31,8 @@ public class AdminController {
 	UserDAO userDao;
 	@Autowired
 	ServiceDAO serviceDao;
-	
+	@Autowired
+	Validator validator;
 	@Autowired
 	BookingsDAOImpl bookingsDaoImpl;
 	
@@ -66,7 +68,27 @@ public class AdminController {
 	                           @RequestParam("price") int price,
 	                           @RequestParam("venue_image") MultipartFile venueImage,
 	                           Model model) throws IOException {
-	        
+		  if (!validator.validateString(name)) {
+	            model.addAttribute("error", "Invalid format");
+	            return ADMIN_JSP;
+	               }
+		 
+		  if (!validator.validateString(location)) {
+	            model.addAttribute("error", "Invalid format");
+	            return ADMIN_JSP;
+	               }
+		  if (!validator.validateContact(contact)) {
+	            model.addAttribute("error", "Invalid format");
+	            return ADMIN_JSP;
+	               }
+		  
+	      if(capacity<0 ) {
+	    	  return ADMIN_JSP;
+	      }
+	      if(price<0) {
+	    	  return ADMIN_JSP;
+	      }
+		  
 	        byte[] imageBytes = venueImage.getBytes();
 	        
 	        Venue venue = new Venue();
@@ -121,6 +143,25 @@ public class AdminController {
 	                           @RequestParam("price") int price,
 	                           @RequestParam("profile_image") MultipartFile vendorImage,
 	                           Model model) throws IOException{
+		 
+		 if (!validator.validateString(name)) {
+	            model.addAttribute("error", "Invalid format");
+	            return ADMIN_JSP;
+	               }
+		 if (!validator.validateString(vendorType)) {
+	            model.addAttribute("error", "Invalid format");
+	            return ADMIN_JSP;
+	               }
+		 
+		 if (!validator.validateContact(contact)) {
+	            model.addAttribute("error", "Invalid format");
+	            return ADMIN_JSP;
+	               }
+		     
+		 if(price<0) {
+	    	  return ADMIN_JSP;
+	      }
+		 
 		 Vendor vendor = new Vendor();
 		 vendor.setVendorName(name);
 		 vendor.setVendorType(vendorType);
@@ -159,7 +200,22 @@ public class AdminController {
 	                           @RequestParam("price") int price,
 	                           @RequestParam("poster_image") MultipartFile posterImage,
 	                           Model model) throws IOException {
-	       
+		 if (!validator.validateString(ShowName)) {
+	            model.addAttribute("error", "Invalid format");
+	            return ADMIN_JSP;
+	               }
+		 if (!validator.validateString(location)) {
+	            model.addAttribute("error", "Invalid format");
+	            return ADMIN_JSP;
+	               }
+		 
+		 if (!validator.validateContact(category)) {
+	            model.addAttribute("error", "Invalid format");
+	            return ADMIN_JSP;
+	               }
+		     
+		 
+	
 		 DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 		  LocalTime startTime = LocalTime.parse(startTimeStr, timeFormatter);
 	        LocalTime endTime = LocalTime.parse(endTimeStr, timeFormatter);

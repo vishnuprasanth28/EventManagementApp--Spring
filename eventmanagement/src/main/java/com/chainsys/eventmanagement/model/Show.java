@@ -10,8 +10,8 @@ public class Show {
 	public String toString() {
 		return "Show [id=" + id + ", name=" + name + ", category=" + category + ", location=" + location + ", date="
 				+ date + ", startTime=" + startTime + ", endTime=" + endTime + ", ticketsCount=" + ticketsCount
-				+ ", posterImage=" + Arrays.toString(posterImage) + ", price=" + price + ", ticketsBooked="
-				+ ticketsBooked + ", userId=" + userId + "]";
+				+ ", ticketId=" + ticketId + ", posterImage=" + Arrays.toString(posterImage) + ", price=" + price
+				+ ", ticketsBooked=" + ticketsBooked + ", userId=" + userId + "]";
 	}
 	public int getId() {
 		return id;
@@ -69,7 +69,13 @@ public class Show {
 	    private Time startTime;
 	    private Time endTime;
 	    private int ticketsCount;
-	    
+	    public String getTicketId() {
+			return ticketId;
+		}
+		public void setTicketId(String ticketId) {
+			this.ticketId = ticketId;
+		}
+		private String ticketId;
 	    public byte[] getPosterImage() {
 			return posterImage;
 		}

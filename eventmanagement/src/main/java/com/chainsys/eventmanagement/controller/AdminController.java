@@ -38,7 +38,7 @@ public class AdminController {
 	
 	private static final String ADMIN_JSP = "admindashboard.jsp";
 	private static final String VENUE_LIST_ATTRIBUTE = "venueList";
-	
+	private static final String LIST_OF_VENDORS_ATTRIBUTE = "listOfVendors";
 	 @PostMapping("/adminLogin")
 	    public String adminLogin(@RequestParam("Username") String userName,@RequestParam("Password") String password, HttpSession session, Model model) {
 	      
@@ -51,7 +51,7 @@ public class AdminController {
 	                session.setAttribute("admin", user.getUserName());
 	              model.addAttribute(VENUE_LIST_ATTRIBUTE, serviceDao.getAllVenues());
 	             
-	               model.addAttribute("listOfVendors", serviceDao.getAllvendors());
+	               model.addAttribute(LIST_OF_VENDORS_ATTRIBUTE, serviceDao.getAllvendors());
 	               model.addAttribute("bookedEvents", serviceDao.getEvents());
 	                return ADMIN_JSP; 
 	            }
@@ -69,16 +69,16 @@ public class AdminController {
 	                           @RequestParam("venue_image") MultipartFile venueImage,
 	                           Model model) throws IOException {
 		  if (!validator.validateString(name)) {
-	            model.addAttribute("error", "Invalid format");
+	            model.addAttribute("error", "Invalid name format");
 	            return ADMIN_JSP;
 	               }
 		 
 		  if (!validator.validateString(location)) {
-	            model.addAttribute("error", "Invalid format");
+	            model.addAttribute("error", "Invalid location");
 	            return ADMIN_JSP;
 	               }
 		  if (!validator.validateContact(contact)) {
-	            model.addAttribute("error", "Invalid format");
+	            model.addAttribute("error", "Invalid contact");
 	            return ADMIN_JSP;
 	               }
 		  
@@ -103,7 +103,7 @@ public class AdminController {
 	        	serviceDao.addVenue(venue);
 	            List<Venue> venueList = serviceDao.getAllVenues();
 	            model.addAttribute(VENUE_LIST_ATTRIBUTE, venueList);
-	            model.addAttribute("listOfVendors", serviceDao.getAllvendors());
+	            model.addAttribute(LIST_OF_VENDORS_ATTRIBUTE, serviceDao.getAllvendors());
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	            model.addAttribute("error", "Failed to add venue. Please try again.");
@@ -116,7 +116,7 @@ public class AdminController {
 		 
 		serviceDao.deleteVenue(idToDelete);
 		 model.addAttribute(VENUE_LIST_ATTRIBUTE, serviceDao.getAllVenues());
-         model.addAttribute("listOfVendors", serviceDao.getAllvendors());
+         model.addAttribute(LIST_OF_VENDORS_ATTRIBUTE, serviceDao.getAllvendors());
 		
 		 return ADMIN_JSP;
 	}
@@ -131,7 +131,7 @@ public class AdminController {
 		
 		serviceDao.updateVenueDetails(venue);
 		 model.addAttribute(VENUE_LIST_ATTRIBUTE, serviceDao.getAllVenues());
-         model.addAttribute("listOfVendors", serviceDao.getAllvendors());
+         model.addAttribute(LIST_OF_VENDORS_ATTRIBUTE, serviceDao.getAllvendors());
 		
 		 return ADMIN_JSP;
 	}
@@ -145,16 +145,16 @@ public class AdminController {
 	                           Model model) throws IOException{
 		 
 		 if (!validator.validateString(name)) {
-	            model.addAttribute("error", "Invalid format");
+	            model.addAttribute("error", "Invalid name format");
 	            return ADMIN_JSP;
 	               }
 		 if (!validator.validateString(vendorType)) {
-	            model.addAttribute("error", "Invalid format");
+	            model.addAttribute("error", "Invalid vendor");
 	            return ADMIN_JSP;
 	               }
 		 
 		 if (!validator.validateContact(contact)) {
-	            model.addAttribute("error", "Invalid format");
+	            model.addAttribute("error", "Invalid contact format");
 	            return ADMIN_JSP;
 	               }
 		     
@@ -173,7 +173,7 @@ public class AdminController {
 		 
 		 serviceDao.addVendor(vendor);
 		 model.addAttribute(VENUE_LIST_ATTRIBUTE, serviceDao.getAllVenues());
-         model.addAttribute("listOfVendors", serviceDao.getAllvendors());
+         model.addAttribute(LIST_OF_VENDORS_ATTRIBUTE, serviceDao.getAllvendors());
 		
 		 return ADMIN_JSP;
 		 
@@ -184,7 +184,7 @@ public class AdminController {
 		 
 		 serviceDao.deleteVendor(idToDelete);
 		 model.addAttribute(VENUE_LIST_ATTRIBUTE, serviceDao.getAllVenues());
-         model.addAttribute("listOfVendors", serviceDao.getAllvendors());
+         model.addAttribute(LIST_OF_VENDORS_ATTRIBUTE, serviceDao.getAllvendors());
 		 return ADMIN_JSP;
 		 
 		 
@@ -201,20 +201,30 @@ public class AdminController {
 	                           @RequestParam("poster_image") MultipartFile posterImage,
 	                           Model model) throws IOException {
 		 if (!validator.validateString(ShowName)) {
-	            model.addAttribute("error", "Invalid format");
+	            model.addAttribute("error", "Invalid show name");
 	            return ADMIN_JSP;
 	               }
 		 if (!validator.validateString(location)) {
-	            model.addAttribute("error", "Invalid format");
+	            model.addAttribute("error", "Invalid location format");
 	            return ADMIN_JSP;
 	               }
 		 
 		 if (!validator.validateContact(category)) {
-	            model.addAttribute("error", "Invalid format");
+	            model.addAttribute("error", "Invalid category");
 	            return ADMIN_JSP;
 	               }
-		     
-		 
+		 if(ticketsCount<0) {
+	    	  return ADMIN_JSP;
+	      }
+		 if(price<0) {
+	    	  return ADMIN_JSP;
+	      }
+		 if(!validator.validateTime(endTimeStr)) {
+			 return ADMIN_JSP; 
+		 }
+		 if(!validator.validateTime(startTimeStr)) {
+			 return ADMIN_JSP; 
+		 }
 	
 		 DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 		  LocalTime startTime = LocalTime.parse(startTimeStr, timeFormatter);
@@ -239,7 +249,7 @@ public class AdminController {
 	        	bookingsDaoImpl.insertShow(show);
 	            List<Venue> venueList = serviceDao.getAllVenues();
 	            model.addAttribute(VENUE_LIST_ATTRIBUTE, venueList);
-	            model.addAttribute("listOfVendors", serviceDao.getAllvendors());
+	            model.addAttribute(LIST_OF_VENDORS_ATTRIBUTE, serviceDao.getAllvendors());
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	            model.addAttribute("error", "Failed to add venue. Please try again.");

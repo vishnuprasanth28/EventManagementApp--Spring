@@ -27,7 +27,8 @@ public class UserController {
 	
 	 @Autowired
 	    private UserValidator userValidator;
-	
+	 private static final String REGISTRATION_JSP = "registration.jsp";
+	 private static final String ERROR_CONSTANT = "error";
 	@RequestMapping("/index")
 	public String view() {
 		
@@ -43,25 +44,25 @@ public class UserController {
 	    	
 	        
 	        if (!userValidator.validateUsername(UserName)) {
-	            model.addAttribute("error", "Invalid username format");
-	            return "registration.jsp";
+	            model.addAttribute(ERROR_CONSTANT, "Invalid username format");
+	            return REGISTRATION_JSP;
 	            
 	        }
 	       
 	        
 	        if (!userValidator.validateMobile(contact)) {
-	            model.addAttribute("error", "Invalid mobile number format");
-	            return "registration.jsp";
+	            model.addAttribute(ERROR_CONSTANT, "Invalid mobile number format");
+	            return REGISTRATION_JSP;
 	        }
 	        
 	        if (!userValidator.validateEmail(email)) {
-	            model.addAttribute("error", "Invalid email format");
-	            return "registration.jsp";
+	            model.addAttribute(ERROR_CONSTANT, "Invalid email format");
+	            return REGISTRATION_JSP;
 	        }
 	       
 	        if (!userValidator.passwordsMatch(confirmPassword)) {
-	            model.addAttribute("error", "Passwords do not match");
-	            return "registration.jsp";
+	            model.addAttribute(ERROR_CONSTANT, "Passwords do not match");
+	            return REGISTRATION_JSP;
 	        }
 	        
 	        User user = new User();
@@ -72,11 +73,13 @@ public class UserController {
 	        try {
 	        	userDao.insertUser(user);
 	        	 model.addAttribute("success", "Registration success");
-	             
+	        	 return "user.jsp"; 
 	        } catch (Exception e) {
 	            e.printStackTrace();
+	            model.addAttribute(ERROR_CONSTANT, "Registration failed");
+	            return REGISTRATION_JSP;
 	        }
-	        return "registration.jsp"; 
+	        
 	    }
 
 	    @PostMapping("/userLogin")
@@ -99,7 +102,7 @@ public class UserController {
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
-	        return "error"; 
+	        return ERROR_CONSTANT; 
 	    }
 	    
 	    @PostMapping("/logout")

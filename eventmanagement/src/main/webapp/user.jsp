@@ -83,6 +83,9 @@ html {
 <body>
 	<div class="login-box">
   <h2>Login</h2>
+   <% if (request.getAttribute("success") != null) { %>
+        <div class="alert alert-success"><%= request.getAttribute("success") %></div>
+    <% } %>
   <form action="userLogin" method="post">
     <div class="user-box">
       <input type="text"  name="Username" placeholder="Username"  pattern="[A-Za-z]+"  required>

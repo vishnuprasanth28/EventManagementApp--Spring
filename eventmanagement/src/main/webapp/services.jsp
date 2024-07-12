@@ -463,19 +463,19 @@ font-size: 1.6rem;
          <form action="/book" method="post">
         <input type="hidden" name="eventType" value="MusicConcerts">
         <button>
-                <img src="images/conference.jpeg" alt="Menu 1">
+                <img src="images/music.webp" alt="Menu 1">
                 <div class="item-caption" >Music Concerts</div>
                 </button>
                 </form>
             </div>
             <div class="menu-item">
   			<a href="#" onclick="getEvents('DanceShows')">
-                <img src="images/product.webp" alt="Menu 2">
+                <img src="images/dance.webp" alt="Menu 2">
                 <div class="item-caption">Dance Shows</div>
             </div>
             <div class="menu-item">
               <a href="#" onclick="getEvents('ComedyShows')">
-                <img src="images/trade.jpeg" alt="Menu 3">
+                <img src="images/mike.webp" alt="Menu 3">
                 <div class="item-caption">Comedy Shows</div>
             </div>
         </div>

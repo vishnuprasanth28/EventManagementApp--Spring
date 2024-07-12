@@ -1,10 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="com.chainsys.eventmanagement.model.Show" %>
+ <%Show show =(Show)request.getAttribute("bookingDetails"); %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Download Coupon as PDF</title>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 <style>
 * {
   margin: 0;
@@ -17,7 +24,6 @@ body {
   justify-content: center;
   align-items: center;
 }
-
 .coupon {
   width: 400px;
   height: 200px;
@@ -39,7 +45,6 @@ body {
   height: 100%;
   z-index: -1;
 }
-
 .coupon::before {
   left: 0;
   background-image: radial-gradient(
@@ -48,7 +53,6 @@ body {
     gold 26px
   );
 }
-
 .coupon::after {
   right: 0;
   background-image: radial-gradient(
@@ -57,13 +61,11 @@ body {
     gold 26px
   );
 }
-
 .coupon > div {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 .left {
   width: 20%;
   border-right: 2px dashed rgba(0, 0, 0, 0.13);
@@ -73,12 +75,10 @@ body {
   white-space: nowrap;
   font-weight: bold;
 }
-
 .center {
   flex-grow: 1;
-  text-align: center;
+  text-align: left;
 }
-
 .right {
   width: 120px;
   background-image: radial-gradient(
@@ -89,28 +89,25 @@ body {
 }
 .right div {
   font-family: "Libre Barcode 128 Text", cursive;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 400;
   transform: rotate(-90deg);
 }
-
-.center h2 {
+.center h6 {
   background: #000;
   color: gold;
   padding: 0 10px;
-  font-size: 2.15rem;
+  font-size: 1rem;
   white-space: nowrap;
 }
-
 .center h3 {
-  font-size: 2.15rem;
+  font-size: 1rem;
 }
 .center small {
   font-size: 0.625rem;
   font-weight: 600;
   letter-spacing: 2px;
 }
-
 @media screen and (max-width:500px){
   .coupon {
     display:grid;
@@ -121,29 +118,51 @@ body {
   }
   .right div {
     transform: rotate(0deg);
-    
   }
 }
 </style>
 </head>
 <body>
-<div class="coupon">
+<div style="text-align: center; margin-top: 20px;">
+    <a href="<%= request.getContextPath() %>/index.jsp" class="button">Back to Home</a>
+</div>
+
+<div class="coupon" id="coupon">
   <div class="left">
     <div>Enjoy Your Show</div>
   </div>
   <div class="center">
     <div>
-      <h2></h2>
-      <h3>Show Name</h3>
-      <small>Valid until May, 2023</small>
+      <h6> <%=show.getName() %></h6>
+      <p>Persons : <%=show.getTicketsBooked() %></p>
+      <small>Date: <%=show.getDate() %></small><br>
+      <small>Start Time: <%=show.getStartTime() %></small><br>
+      <small>End Time: <%=show.getEndTime() %></small>
     </div>
   </div>
-  
   <div class="right">
-    <div>87878521112</div>
+    <div><%=show.getTicketId() %></div>
   </div>
-  
 </div>
+
+<div style="text-align: center; margin-top: 20px;">
+  <button onclick="downloadImage()">Download Coupon as Image</button>
+</div>
+
+<script>
+function downloadImage() {
+    var element = document.getElementById('coupon');
+
+    html2canvas(element).then(function(canvas) {
+        var imageData = canvas.toDataURL('image/png');
+
+        var link = document.createElement('a');
+        link.href = imageData;
+        link.download = 'coupon.png';
+        link.click();
+    });
+}
+</script>
 
 </body>
 </html>

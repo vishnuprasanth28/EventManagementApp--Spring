@@ -163,7 +163,7 @@
       var confirmPasswordInput = document.getElementById('confirmPassword');
       var submitBtn = document.getElementById('submitBtn');
 
-      // Username validation
+     
       usernameInput.addEventListener('input', function() {
         var usernameError = document.getElementById('usernameError');
         if (!/^[A-Za-z]+$/.test(usernameInput.value)) {
@@ -173,7 +173,7 @@
         }
       });
 
-      // Mobile number validation
+   
       mobileInput.addEventListener('input', function() {
         var mobileError = document.getElementById('mobileError');
         if (!/^[0-9]{10}$/.test(mobileInput.value)) {
@@ -183,7 +183,7 @@
         }
       });
 
-      // Email validation
+   
       emailInput.addEventListener('input', function() {
         var emailError = document.getElementById('emailError');
         if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailInput.value)) {
@@ -193,7 +193,7 @@
         }
       });
 
-      // Password validation
+     
       passwordInput.addEventListener('input', function() {
         var passwordError = document.getElementById('passwordError');
         if (!/(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}/.test(passwordInput.value)) {
@@ -203,7 +203,7 @@
         }
       });
 
-      // Confirm password validation
+      
       confirmPasswordInput.addEventListener('input', function() {
         var confirmPasswordError = document.getElementById('confirmPasswordError');
         if (passwordInput.value !== confirmPasswordInput.value) {
@@ -213,7 +213,7 @@
         }
       });
 
-      // Disable submit button until all fields are valid
+   
       submitBtn.addEventListener('click', function(event) {
         var isValid = true;
 
@@ -243,7 +243,7 @@
         }
 
         if (!isValid) {
-          event.preventDefault(); // Prevent form submission
+          event.preventDefault(); 
         }
       });
     });

@@ -83,15 +83,17 @@ public class ServiceDAOImpl implements ServiceDAO {
 	
 	public List<Vendor> getPhotographers(Date date) {
 		String selectVendors = "SELECT vendor_id, vendor_name, vendor_contact, price, profile FROM vendor WHERE vendor_type = 'photography' AND NOT EXISTS (SELECT photography_id FROM Events WHERE event_date = ? AND photography_id = vendor_id)";
-		return jdbcTemplate.query(selectVendors,new VendorServiceMapper(), new Object[] {date} );
+		return jdbcTemplate.query(selectVendors,new VendorServiceMapper(), date);
 	}
 	public List<Vendor> getCatering(Date date) {
 		String selectCatering = "SELECT vendor_id, vendor_name, vendor_contact, price, profile FROM vendor WHERE vendor_type = 'Catering' AND NOT EXISTS (SELECT catering_id FROM Events WHERE event_date = ? AND catering_id = vendor_id)";
-		return jdbcTemplate.query(selectCatering,new VendorServiceMapper(), new Object[] {date} );
+		return jdbcTemplate.query(selectCatering,new VendorServiceMapper(), date );
 	}
 	public void storeBookedEvents(Event event) {
+		
 		String storeEvents="insert into Events (user_id,event_name,event_date,venue_id,photography_id,catering_id) values (?,?,?,?,?,?)";
 		java.sql.Date eventDate = java.sql.Date.valueOf(event.getDateString());
+		
 		Object[] eventParams= {event.getUserId(),event.getEventName(),eventDate,event.getVenueId(),event.getPhotoGraphyId(),event.getCateringId()};
 		jdbcTemplate.update(storeEvents, eventParams);
 	}

@@ -21,4 +21,11 @@ public class Validator {
 	        Matcher matcher = pattern.matcher(contact);
 	        return matcher.matches();
 	    }
+	 public boolean validateTime(String time) {
+		   
+		    String regex = "([01]?[\\d]|2[0-3]):[0-5][\\d]";
+		    Pattern pattern = Pattern.compile(regex);
+		    Matcher matcher = pattern.matcher(time);
+		    return matcher.matches();
+		}
 }

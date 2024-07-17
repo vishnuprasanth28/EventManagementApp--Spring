@@ -6,7 +6,7 @@
 
 <hr>
 <bold>About:</bold><br>
-   Event Management System is designed to streamline the organization and coordination of events. It facilitates seamless registration, management of participants, and scheduling of event activities. The system ensures efficient handling of events and provides real-time updates to organizers and attendees. Whether it's a conference, seminar, or any social events, the Event Management System simplifies the process from planning to execution, enhancing the overall event experience for organizers and participants alike.
+   Event Management System is designed to streamline the organization and coordination of events. It facilitates seamless registration, management of participants, and scheduling event activities. The system ensures efficient handling of events and provides real-time services to organizers and attendees. Whether it's a conference, seminar, or any social events, the Event Management System simplifies the process from planning to execution, enhancing the overall event experience for organizers and participants alike.
 <hr>
 
 <span style="color:blue">**Modules:-**</span><br>

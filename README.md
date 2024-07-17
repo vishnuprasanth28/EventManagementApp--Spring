@@ -11,13 +11,13 @@
 
 <span style="color:blue">**Modules:-**</span><br>
 <span style="color:red">**Admin**</span><br>
-<span>&#9745;</span> Admin add the venuesr<br>
+<span>&#9745;</span> Admin add the venues<br>
 <span>&#9745;</span> Add the vendors<br>
 <span>&#9745;</span> Booked Events list<br>
 
 
 <span style="color:red">**User**</span><br>
-<span>&#9745;</span> View Available venues<br>
+<span>&#9745;</span> View Available Venues<br>
 <span>&#9745;</span> View Available Vendors<br>
 <span>&#9745;</span> Book tickets<br>
 <span>&#9745;</span> Payment<br>
@@ -30,7 +30,7 @@
 <span>&#10004;</span> Events List.<br>
 
 
-<span style="color:blue">**Manager:-**</span><br>
+<span style="color:blue">**User:-**</span><br>
 <span>&#10004;</span> User Registration.<br>
 <span>&#10004;</span> User Login.<br>
 <span>&#10004;</span> view and book venues.<br>

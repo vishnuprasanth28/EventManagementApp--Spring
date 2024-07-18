@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="com.chainsys.eventmanagement.model.Show" %>
- <%Show show =(Show)request.getAttribute("bookingDetails"); %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +10,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.js"></script>
 <style>
 * {
   margin: 0;
@@ -127,41 +126,49 @@ body {
     <a href="<%= request.getContextPath() %>/index.jsp" class="button">Back to Home</a>
 </div>
 
-<div class="coupon" id="coupon">
+<%
+    // Assuming 'bookingDetails' attribute contains the Show object
+    Show show = (Show) request.getAttribute("bookingDetails");
+%>
+<div style="text-align: center; margin-top: 20px;">
+  <button id="download">Download ticket</button>
+</div>
+<div class="coupon" id="ticket">
   <div class="left">
     <div>Enjoy Your Show</div>
   </div>
   <div class="center">
     <div>
-      <h6> <%=show.getName() %></h6>
-      <p>Persons : <%=show.getTicketsBooked() %></p>
-      <small>Date: <%=show.getDate() %></small><br>
-      <small>Start Time: <%=show.getStartTime() %></small><br>
-      <small>End Time: <%=show.getEndTime() %></small>
+      <h6><%= show.getName() %></h6>
+      <p>Persons: <%= show.getTicketsBooked() %></p>
+      <small>Date: <%= show.getDate() %></small><br>
+      <small>Start Time: <%= show.getStartTime() %></small><br>
+      <small>End Time: <%= show.getEndTime() %></small>
     </div>
   </div>
   <div class="right">
-    <div><%=show.getTicketId() %></div>
+    <div><%= show.getTicketId() %></div>
   </div>
 </div>
 
-<div style="text-align: center; margin-top: 20px;">
-  <button onclick="downloadImage()">Download Coupon as Image</button>
-</div>
+
 
 <script>
-function downloadImage() {
-    var element = document.getElementById('coupon');
-
-    html2canvas(element).then(function(canvas) {
-        var imageData = canvas.toDataURL('image/png');
-
-        var link = document.createElement('a');
-        link.href = imageData;
-        link.download = 'coupon.png';
-        link.click();
-    });
-}
+window.onload = function() {
+  document.getElementById("download").addEventListener("click", () => {
+    const ticket = document.getElementById("ticket");
+    
+    var opt = {
+      margin: 1,
+      filename: 'coupon.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    
+    html2pdf().from(ticket).set(opt).save();
+  });
+};
 </script>
 
 </body>

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chainsys.eventmanagement.dao.UserDAO;
+import com.chainsys.eventmanagement.exception.EmailException;
+import com.chainsys.eventmanagement.exception.PasswordException;
 import com.chainsys.eventmanagement.model.User;
 import com.chainsys.eventmanagement.validation.UserValidator;
 
@@ -39,11 +41,12 @@ public class UserController {
 	
 
 	    @PostMapping("/registerUser")
-	    public String registerUser(@RequestParam("username") String UserName,@RequestParam("mobile") String contact,@RequestParam("email") String email,@RequestParam("confirmPassword") String confirmPassword,Model model) {
+	    public String registerUser(@RequestParam("username") String userName,@RequestParam("mobile") String contact,@RequestParam("email") String email,@RequestParam("confirmPassword") String confirmPassword,Model model) 
+	    		throws EmailException, PasswordException {
 	       
 	    	
 	        
-	        if (!userValidator.validateUsername(UserName)) {
+	        if (!userValidator.validateUsername(userName)) {
 	            model.addAttribute(ERROR_CONSTANT, "Invalid username format");
 	            return REGISTRATION_JSP;
 	            
@@ -66,7 +69,7 @@ public class UserController {
 	        }
 	        
 	        User user = new User();
-	        user.setUserName(UserName);
+	        user.setUserName(userName);
 	        user.setPassword(confirmPassword);
 	        user.setMobile(contact);
 	        user.setEmail(email);
@@ -97,7 +100,7 @@ public class UserController {
 	                session.setAttribute("user", user);
 	                return "index.jsp";
 	            } else {
-	                return "redirect:/login.jsp?error=true";
+	                return "redirect:/user.jsp?error=true";
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();

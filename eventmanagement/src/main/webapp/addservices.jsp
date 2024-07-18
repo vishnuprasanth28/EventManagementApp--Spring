@@ -51,7 +51,7 @@ boolean isLoggedIn = (user != null);
 	
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand" href="#"><img src="images/epic-events-high-resolution-logo.png" alt="Company Logo" style="height: 40px;"></a>
+    <a class="navbar-brand" href="index.jsp"><img src="images/epic-events-high-resolution-logo.png" alt="Company Logo" style="height: 40px;"></a>
     <span class="navbar-text mr-auto">EPIC EVENTS</span>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">

@@ -91,7 +91,7 @@ boolean isLoggedIn = (user != null);
 	</nav>
 
 	<h1>Venue Details</h1>
-
+	
 	<%
     try {
     	ArrayList<Venue> venues = (ArrayList<Venue>)request.getAttribute("venues");
@@ -137,6 +137,5 @@ boolean isLoggedIn = (user != null);
         out.println("Error retrieving venues: " + e.getMessage());
     }
 %>
-
 </body>
 </html>

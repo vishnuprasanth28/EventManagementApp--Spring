@@ -206,11 +206,6 @@ boolean isLoggedIn = (user != null);
 
 
 
-
-/*-----------------------------------*\
-#RESET
-\*-----------------------------------*/
-
 *,
 *::before,
 *::after {
@@ -273,7 +268,7 @@ font-size: 1.6rem;
     <span class="navbar-text mr-auto">EPIC EVENTS</span>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Home</a>
+        <a class="nav-link" href="index.jsp">Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="service.jsp">Services</a>

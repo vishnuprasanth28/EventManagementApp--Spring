@@ -4,6 +4,9 @@ import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Component;
 
+import com.chainsys.eventmanagement.exception.EmailException;
+import com.chainsys.eventmanagement.exception.PasswordException;
+
 @Component
 public class UserValidator {
 
@@ -25,7 +28,7 @@ public class UserValidator {
         return matcher.matches();
     }
 
-    public boolean validateEmail(String email) {
+    public boolean validateEmail(String email) throws EmailException {
        
         String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[a-zA-Z]{2,}$";
         Pattern pattern = Pattern.compile(regex);
@@ -33,10 +36,19 @@ public class UserValidator {
         return matcher.matches();
     }
 
-    public boolean passwordsMatch(String confirmPassword) {
+    public boolean passwordsMatch(String confirmPassword) throws PasswordException{
     	String regex = "(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(confirmPassword);
-        return matcher.matches();
+        Boolean password= matcher.matches();
+        if(Boolean.TRUE.equals(password)) {
+        	return true;
+        	
+        }else {
+        	  
+        	throw new PasswordException();
+        
+        }
+      
     }
 }

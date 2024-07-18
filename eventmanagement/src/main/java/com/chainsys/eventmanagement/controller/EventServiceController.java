@@ -20,14 +20,14 @@ public class EventServiceController {
 	
 	@Autowired
 	ServiceDAOImpl serviceImpl;
-	
+	private static final String EVENT = "event";
 	@PostMapping("/getVenue")
 	public String getVenue(@RequestParam("eventType")String eventType,@RequestParam("eventDate")String eventDate,@RequestParam("location")String location,Model model) throws SQLException {
 		
 		 java.sql.Date dateTosort = java.sql.Date.valueOf(eventDate);
 		 
 		 model.addAttribute("venues",serviceImpl.getAvailableVenues(dateTosort, location));
-		 model.addAttribute("event", eventType);
+		 model.addAttribute(EVENT, eventType);
 		 model.addAttribute("date", dateTosort);
 		
 		return "venue.jsp";
@@ -42,7 +42,7 @@ public class EventServiceController {
 		 model.addAttribute("catering", serviceImpl.getCatering(dateTosort));
 		 model.addAttribute("venueId", venueId);
 		 model.addAttribute("venuePrice", venuePrice);
-		 model.addAttribute("event", eventType);
+		 model.addAttribute(EVENT, eventType);
 		 
 		return "addservices.jsp";
 	}
@@ -84,7 +84,7 @@ public class EventServiceController {
 	        event.setCateringId(selectedCateringId);
 	        event.setPhotoGraphyId(selectedPhotographerId);
 	        
-	        model.addAttribute("event", event);
+	        model.addAttribute(EVENT, event);
 		
 		return "checkout.jsp";
 	}

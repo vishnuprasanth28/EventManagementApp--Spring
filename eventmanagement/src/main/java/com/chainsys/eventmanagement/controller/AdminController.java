@@ -35,7 +35,7 @@ public class AdminController {
 	Validator validator;
 	@Autowired
 	BookingsDAOImpl bookingsDaoImpl;
-	
+	private static final String ERROR = "error";
 	private static final String ADMIN_JSP = "admindashboard.jsp";
 	private static final String VENUE_LIST_ATTRIBUTE = "venueList";
 	private static final String LIST_OF_VENDORS_ATTRIBUTE = "listOfVendors";
@@ -58,7 +58,7 @@ public class AdminController {
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
-	        return "error"; 
+	        return "admin.jsp"; 
 	    }
 	 @PostMapping("/addVenue")
 	    public String addVenue(@RequestParam("name") String name,
@@ -69,16 +69,16 @@ public class AdminController {
 	                           @RequestParam("venue_image") MultipartFile venueImage,
 	                           Model model) throws IOException {
 		  if (!validator.validateString(name)) {
-	            model.addAttribute("error", "Invalid name format");
+	            model.addAttribute(ERROR, "Invalid name format");
 	            return ADMIN_JSP;
 	               }
 		 
 		  if (!validator.validateString(location)) {
-	            model.addAttribute("error", "Invalid location");
+	            model.addAttribute(ERROR, "Invalid location");
 	            return ADMIN_JSP;
 	               }
 		  if (!validator.validateContact(contact)) {
-	            model.addAttribute("error", "Invalid contact");
+	            model.addAttribute(ERROR, "Invalid contact");
 	            return ADMIN_JSP;
 	               }
 		  
@@ -106,7 +106,7 @@ public class AdminController {
 	            model.addAttribute(LIST_OF_VENDORS_ATTRIBUTE, serviceDao.getAllvendors());
 	        } catch (Exception e) {
 	            e.printStackTrace();
-	            model.addAttribute("error", "Failed to add venue. Please try again.");
+	            model.addAttribute(ERROR, "Failed to add venue. Please try again.");
 	        }
 	 
 	        return ADMIN_JSP;
@@ -145,16 +145,16 @@ public class AdminController {
 	                           Model model) throws IOException{
 		 
 		 if (!validator.validateString(name)) {
-	            model.addAttribute("error", "Invalid name format");
+	            model.addAttribute(ERROR, "Invalid name format");
 	            return ADMIN_JSP;
 	               }
 		 if (!validator.validateString(vendorType)) {
-	            model.addAttribute("error", "Invalid vendor");
+	            model.addAttribute(ERROR, "Invalid vendor");
 	            return ADMIN_JSP;
 	               }
 		 
 		 if (!validator.validateContact(contact)) {
-	            model.addAttribute("error", "Invalid contact format");
+	            model.addAttribute(ERROR, "Invalid contact format");
 	            return ADMIN_JSP;
 	               }
 		     
@@ -190,7 +190,7 @@ public class AdminController {
 		 
 	 }
 	 @PostMapping("/addshow")
-	    public String addShow(@RequestParam("showName") String ShowName,
+	    public String addShow(@RequestParam("showName") String showName,
 	                           @RequestParam("category") String category,
 	                           @RequestParam("location") String location,
 	                           @RequestParam("date") Date date,
@@ -200,17 +200,17 @@ public class AdminController {
 	                           @RequestParam("price") int price,
 	                           @RequestParam("poster_image") MultipartFile posterImage,
 	                           Model model) throws IOException {
-		 if (!validator.validateString(ShowName)) {
-	            model.addAttribute("error", "Invalid show name");
+		 if (!validator.validateString(showName)) {
+	            model.addAttribute(ERROR, "Invalid show name");
 	            return ADMIN_JSP;
 	               }
 		 if (!validator.validateString(location)) {
-	            model.addAttribute("error", "Invalid location format");
+	            model.addAttribute(ERROR, "Invalid location format");
 	            return ADMIN_JSP;
 	               }
 		 
 		 if (!validator.validateContact(category)) {
-	            model.addAttribute("error", "Invalid category");
+	            model.addAttribute(ERROR, "Invalid category");
 	            return ADMIN_JSP;
 	               }
 		 if(ticketsCount<0) {
@@ -235,7 +235,7 @@ public class AdminController {
 	        Time sqlEndTime = Time.valueOf(endTime);
 	      
 	        Show show = new Show();
-	        show.setName(ShowName);
+	        show.setName(showName);
 	        show.setCategory(category);
 	        show.setLocation(location);
 	        show.setDate(date);
@@ -252,7 +252,7 @@ public class AdminController {
 	            model.addAttribute(LIST_OF_VENDORS_ATTRIBUTE, serviceDao.getAllvendors());
 	        } catch (Exception e) {
 	            e.printStackTrace();
-	            model.addAttribute("error", "Failed to add venue. Please try again.");
+	            model.addAttribute(ERROR, "Failed to add venue. Please try again.");
 	        }
 	 
 	        return ADMIN_JSP;

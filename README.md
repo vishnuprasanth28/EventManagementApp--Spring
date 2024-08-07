@@ -13,12 +13,14 @@
 <span style="color:red">**Admin**</span><br>
 <span>&#9745;</span> Admin add the venues<br>
 <span>&#9745;</span> Add the vendors<br>
+<span>&#9745;</span> Add the Shows<br>
 <span>&#9745;</span> Booked Events list<br>
 
 
 <span style="color:red">**User**</span><br>
 <span>&#9745;</span> View Available Venues<br>
 <span>&#9745;</span> View Available Vendors<br>
+<span>&#9745;</span> View Available Shows<br>
 <span>&#9745;</span> Book tickets<br>
 <span>&#9745;</span> Payment<br>
 
@@ -27,6 +29,7 @@
 <span>&#10004;</span> Add Venues.<br>
 <span>&#10004;</span> Add Photography.<br>
 <span>&#10004;</span> Add Catering.<br>
+<span>&#10004;</span> Add Shows.<br>
 <span>&#10004;</span> Events List.<br>
 
 
@@ -45,6 +48,7 @@
 ### Technologies used:-
 1. Front-End Development:
 - Html 5.
+- Thymeleaf
 - CSS.
 - Javascript.
 
@@ -73,3 +77,16 @@
      Here, users can book tickets for entertainment events including music concerts, dance shows, and comedy shows. After completing the payment process, users can download their tickets instantly.<br>
 <span style="color:blue">**Payment:**</span><br>
      This section allows users to securely complete their transactions for bookings and purchases. We accept major credit cards, debit cards, and other payment methods for your convenience.
+
+### Documentation 
+<a href="#"> Event Management Usermanual</a><br>
+<a href="#"> Event Management PPT</a>
+
+
+### Installation
+
+1. **Clone the repository**:
+
+   ```sh 
+   https://git.chainsys.com/2024_java_batch/event_management.git
+
